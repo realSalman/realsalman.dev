@@ -37,7 +37,7 @@ export default function LeftSidebar() {
               <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
               <path d="M6 12v5c3 3 9 3 12 0v-5" />
             </svg>
-            <span>CS undergrad</span>
+            <span>CSE Undergrad</span>
           </li>
           <li className="flex items-center gap-3">
             <svg className="w-4 h-4 text-gray-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -9,15 +9,15 @@ export default function ProjectsPage() {
           Projects
         </h1>
         <p className="text-md md:text-md font-mono text-textBody">
-          Here are a few of my pinned and top-starred repositories from GitHub.
+          Here are a few projects, will be adding more soon.
         </p>
       </section>
 
       <section>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {projects.map((repo) => (
-            <Link 
-              key={repo.slug} 
+            <Link
+              key={repo.slug}
               href={`/projects/${repo.slug}`}
               className="block p-5 md:p-6 bg-surface rounded-xl hover:bg-[#2a2a2a] transition-colors group"
             >
@@ -30,7 +30,7 @@ export default function ProjectsPage() {
                 </div>
               </div>
               <p className="text-gray-400 text-sm mb-5 line-clamp-2 h-10">
-                {repo.description}
+                {Array.isArray(repo.description) ? repo.description.join(', ') : repo.description}
               </p>
             </Link>
           ))}

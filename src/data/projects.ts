@@ -21,6 +21,8 @@ export type Project = {
   architecture?: ArchitectureStep[];
   tech?: string[];
   image?: string | null;
+  link?: string;
+  linkText?: string;
 };
 
 export const projects: Project[] = [

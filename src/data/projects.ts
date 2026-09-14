@@ -11,6 +11,249 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    name: "GreenMesh",
+    slug: "greenmesh",
+    description: "Decentralized, eco-intelligent multi-GPU LLM inference management & P2P federation engine.",
+    details: `
+# 🌿 GreenMesh
+
+### **Decentralized, Eco-Intelligent Multi-GPU LLM Inference Management & Peer-to-Peer Federation Engine**
+
+## 📖 Overview
+
+**GreenMesh** is an open-source, eco-intelligent LLM inference orchestration platform and multi-GPU cluster management system. It bridges the gap between high-performance AI inference and environmental sustainability by introducing **Green-Aware Workload Routing**, **P2P Node Federation**, and a **Deadline Guard & Carbon Proof Module**.
+
+As Large Language Model (LLM) inference scales globally, energy consumption and carbon intensity have become critical challenges. GreenMesh addresses this by dynamically routing inference requests across distributed compute nodes based on real-time renewable energy availability (Solar, Wind, Grid), while allowing non-urgent workloads to be deferred until green power is accessible—without exceeding strict user SLAs.
+
+## ✨ Key Features
+
+- 🌿 **Green Energy-Aware Routing**: Evaluates real-time energy sources across local clusters and federated peer nodes (Solar ☀️: 100/100, Wind 💨: 80/100, Grid ⚡: 20/100) to prioritize low-carbon LLM execution.
+- ⏱️ **Deadline Guard & Carbon Proof Module**: Enforces strict user-defined SLAs (\`max_defer_seconds\`) for flexible jobs. Predicts carbon savings prior to execution, tracks actual energy consumption, and logs verified savings in an auditable **Trade-Off Table**.
+- 🌐 **Peer-to-Peer Node Federation**: Decentralized node discovery, health heartbeat exchange, and green routing across independent GPU clusters over HTTP/HTTPS.
+- ⚡ **Multi-GPU Cluster & Runner Management**: Launches and manages \`llama-server\` instances across dedicated physical GPUs (\`main_gpu\`, \`tensor_split\`). Features automatic idle model unloading to optimize VRAM utilization.
+- 🔌 **OpenAI API Compliance**: Full drop-in replacement for OpenAI endpoints (\`/v1/chat/completions\`, \`/v1/models\`, \`/v1/embeddings\`, \`/v1/completions\`) with support for streaming responses (SSE).
+- 📊 **Hardware Telemetry & GPU Metrics**: Integrated real-time collector for NVIDIA (\`nvidia-smi\`) and AMD (\`amd-smi\`) GPUs, capturing VRAM allocation, GPU utilization %, temperature, power draw, and tokens-per-second throughput.
+- 🖥️ **Dual-Mode Web Dashboard (Next.js 16 / TailwindCSS 4)**:
+  - **Admin Operations Dashboard**: Cluster cards, live energy source toggles, carbon proof trade-off analytics, throughput gauges, and a real-time event trace terminal.
+  - **User Chat Portal**: Interactive conversational AI interface with real-time green energy routing indicators, deadline deferral sliders, and model selectors.
+- 🔍 **Live Event Tracing**: Server-Sent Events (SSE) \`/trace/stream\` outputting internal routing decisions, deferral triggers, execution timestamps, and telemetry logs in real time.
+
+## 📐 Architecture Overview
+
+GreenMesh consists of a high-performance Python \`aiohttp\` backend server orchestrating local \`llama-server\` instances, communicating with federated peer nodes, and serving a Next.js frontend application.
+
+## 📁 Project Directory Layout
+
+\`\`\`text
+GreenMesh-v-2.0/
+├── client/                     # Next.js 16 + React 19 Frontend Dashboard & User Portal
+│   ├── dev.js                  # Script launching Admin (3000) & User (3001) portals
+│   ├── src/
+│   │   ├── app/                # Next.js App Router pages (Dashboard & Chat)
+│   │   ├── components/         # UI components (NodeCard, MetricsCards, CarbonProofTable, etc.)
+│   │   ├── lib/                # API client helper & utility functions
+│   │   └── types/               # TypeScript interfaces & types
+├── llama/                      # Precompiled llama-server executable binary
+├── models/                     # GGUF Quantized Large Language Models
+├── server/                     # Async Python Server Backend
+│   ├── api.py                  # API endpoints handler & OpenAI compatibility layer
+│   ├── cluster.py              # Runner & process management for llama-server
+│   ├── config.py               # Configuration loader & validator
+│   ├── deadline_guard.py       # Deadline Guard & Carbon Proof calculations
+│   ├── federation.py           # P2P Node discovery, state exchange & green routing
+│   ├── gpu_metrics.py          # NVIDIA & AMD GPU telemetry harvester
+│   ├── main.py                 # Backend entry point, CLI launcher & logging setup
+│   ├── throughput_metrics.py   # Tokens-per-second performance metrics
+│   └── trace.py                # Server-Sent Events (SSE) trace logger
+├── CONFIGURATION.md            # Detailed configuration documentation
+├── pyproject.toml              # Python project metadata & build configuration
+└── README.md                   # Project documentation
+\`\`\`
+
+## 🚀 Quickstart Guide
+
+### Prerequisites
+
+1. **Python**: 3.10 or higher
+2. **Node.js**: v18.0.0 or higher
+3. **llama-server**: Precompiled binary of \`llama-server\` (from llama.cpp) placed in \`llama/\` or specified in \`config.json\`.
+4. **Models**: GGUF format model files placed in \`models/\` directory.
+
+### Step 1: Install & Start Python Backend
+
+\`\`\`bash
+git clone https://github.com/realSalman/GreenMesh.git
+cd GreenMesh
+
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\\Scripts\\activate
+
+pip install -e .
+
+python3 server/main.py server/config.json
+\`\`\`
+
+The GreenMesh API server will start listening at \`http://0.0.0.0:8080\`.
+
+### Step 2: Install & Start Web Client
+
+\`\`\`bash
+cd client
+npm install
+npm run dev
+\`\`\`
+
+- **Admin Dashboard**: http://localhost:3000
+- **User Chat Portal**: http://localhost:3001
+
+## 📡 API Reference & Endpoints
+
+### OpenAI-Compatible Endpoints
+
+| Method | Endpoint               | Description                                                                                  |
+| ------ | ---------------------- | --------------------------------------------------------------------------------------------- |
+| POST   | /v1/chat/completions    | OpenAI format chat completion, plus green deferral headers/body parameters.                    |
+| POST   | /v1/completions         | Legacy text completion endpoint.                                                                |
+| POST   | /v1/embeddings          | Text embeddings generation.                                                                     |
+| GET    | /v1/models              | Lists available models across local clusters and federated nodes.                               |
+
+### GreenMesh Native & Management Endpoints
+
+| Method | Endpoint              | Description                                                          |
+| ------ | --------------------- | --------------------------------------------------------------------- |
+| GET    | /health                | Server and cluster health status.                                    |
+| GET    | /metrics/gpu           | Real-time GPU telemetry (VRAM, load %, power draw, temp).             |
+| GET    | /metrics/throughput    | Inference throughput metrics (tokens/sec).                            |
+| GET    | /federation/nodes      | List all discovered P2P mesh nodes and their energy scores.           |
+| POST   | /federation/energy     | Update energy source simulation for a local cluster (admin tool).     |
+| GET    | /tradeoff/table        | Retrieve Deadline Guard deferral history, wait times & carbon saved.  |
+| GET    | /trace/stream          | Server-Sent Events (SSE) stream of system routing logs and events.    |
+
+## 🌍 Sustainability & UN SDG Alignment
+
+GreenMesh directly aligns with key United Nations Sustainable Development Goals:
+
+- **SDG 13: Climate Action**: Reduces the operational carbon footprint of AI workloads through green-aware routing and load shifting to renewable-powered nodes.
+- **SDG 9: Industry, Innovation, and Infrastructure**: Enables resilient, decentralized GPU compute infrastructure that dynamically adapts to grid greenness.
+- **SDG 12: Responsible Consumption and Production**: Maximizes GPU hardware efficiency via memory auto-unloading and carbon proof auditability.
+
+## 📜 License
+
+This project is licensed under the BSD-3-Clause License.
+`,
+    language: "Python",
+    stars: 0,
+    forks: 0,
+    url: "https://github.com/realSalman/GreenMesh"
+  },
+  {
+    name: "Synapse-AI-Task-Manager",
+    slug: "synapse-ai-task-manager",
+    description: "A full-stack task management application with AI-powered features.",
+    details: `
+# Synapse AI Task Manager
+
+A full-stack task management application with AI-powered features.
+
+## Tech Stack
+
+- **Frontend:** Next.js, React, Tailwind CSS, Zustand, TanStack Query
+- **Backend:** Node.js, Express, TypeScript, Firebase Admin
+- **Database:** MongoDB
+- **Authentication:** Firebase
+
+## Prerequisites
+
+- Node.js (v18+)
+- MongoDB instance
+- Firebase Service Account Key
+
+## Setup & Installation
+
+### 1. Clone the repository
+
+\`\`\`bash
+git clone https://github.com/realSalman/Synapse-AI-Task-Manager.git
+cd Synapse-AI-Task-Manager
+\`\`\`
+
+### 2. Backend Configuration
+
+Navigate to the \`server\` directory and create a \`.env\` file:
+
+\`\`\`bash
+cd server
+npm install
+\`\`\`
+
+Add the following to \`.env\`:
+- \`PORT=5000\`
+- \`MONGO_URI=<your-mongodb-uri>\`
+- \`FIREBASE_SERVICE_ACCOUNT_PATH=<path-to-serviceAccountKey.json>\`
+- \`OPENROUTER_API_KEY=<your-openrouter-key>\`
+
+### 3. Frontend Configuration
+
+Navigate to the \`client\` directory and create a \`.env.local\` file:
+
+\`\`\`bash
+cd ../client
+npm install
+\`\`\`
+
+Add the following to \`.env.local\`:
+- \`NEXT_PUBLIC_API_URL=http://localhost:5000/api\`
+- \`NEXT_PUBLIC_FIREBASE_API_KEY=\`
+- \`NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=\`
+- \`NEXT_PUBLIC_FIREBASE_PROJECT_ID=\`
+- \`NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=\`
+- \`NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=\`
+- \`NEXT_PUBLIC_FIREBASE_APP_ID=\`
+- \`NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=\`
+
+## Running the Application
+
+### Start Backend
+
+\`\`\`bash
+cd server
+npm run dev
+\`\`\`
+
+### Start Frontend
+
+\`\`\`bash
+cd client
+npm run dev
+\`\`\`
+
+## Project Structure
+
+### Frontend (\`/client\`)
+
+- \`app/\`: Next.js App Router (pages and layouts)
+- \`components/\`: Reusable UI components
+- \`store/\`: Zustand state management
+- \`hooks/\`: Custom React hooks
+- \`lib/\`: API client (Axios) and utility functions
+- \`context/\`: React context providers
+- \`modals/\`: Global modal components
+
+### Backend (\`/server\`)
+
+- \`src/routes/\`: API endpoint definitions
+- \`src/controllers/\`: Request handler logic
+- \`src/models/\`: MongoDB/Mongoose schemas
+- \`src/middleware/\`: Authentication and error handling
+- \`src/services/\`: Business logic and external integrations (AI)
+- \`src/config/\`: Database and Firebase Admin configuration
+`,
+    language: "TypeScript",
+    stars: 0,
+    forks: 0,
+    url: "https://github.com/realSalman/Synapse-AI-Task-Manager"
+  },
+  {
     name: "PHMN-MINER-tma",
     slug: "phmn-miner-tma",
     description: "A telegram mini app miner.",
@@ -162,145 +405,155 @@ Distributed under the MIT License. See \`LICENSE\` for more information.
     url: "https://github.com/realSalman/ascii-tube-webapp"
   },
   {
-    name: "ascii-video-player",
-    slug: "ascii-video-player",
-    description: "C-based ASCII video player.",
+    name: "ton-escrow-marketplace",
+    slug: "ton-escrow-marketplace",
+    description: "A Telegram Mini App marketplace with a TON-based escrow system.",
     details: `
-# ASCII Video Player
+# TON Escrow Marketplace
 
-A command-line tool that plays videos and displays images as colorized ASCII art in the terminal, complete with synchronized audio support.
-Inspired from: https://github.com/gouwsxander/ascii-view
+A Telegram Mini App (TMA) marketplace featuring an escrow system built on The Open Network (TON). The application uses **TON Wallet v5 (W5)** smart contracts to facilitate USDT payments with gas fees paid directly in USDT, removing the requirement for users to hold TON for transaction fees.
 
-## Features
-- **Video Playback**: High-speed frame processing for smooth video streaming.
-- **Audio Synchronization**: Automatic background audio playback.
-- **TrueColor Support**: Uses 24-bit ANSI color codes for high-fidelity reproduction.
-- **Retro Mode**: Optional 8-color mode for a classic terminal aesthetic.
-- **Edge Enhancement**: Sobel filters to keep outlines sharp at low resolutions.
+## Architecture & System Flow
 
----
-
-## 🛠 Prerequisites
-
-Before building, ensure you have the following installed and added to your system **PATH**:
-
-### 1. FFmpeg & FFprobe (Required for Video)
-Used for video decoding, scaling, and audio extraction.
-- **Windows**: Download from [gyan.dev](https://www.gyan.dev/ffmpeg/builds/) or install via \`winget install ffmpeg\`.
-- **Linux**: \`sudo apt install ffmpeg\` (Ubuntu/Debian) or \`sudo pacman -S ffmpeg\` (Arch).
-- **macOS**: \`brew install ffmpeg\`.
-
-### 2. Build Tools
-- A C99-compatible compiler (**GCC** or **Clang**).
-- **Make** build system.
-
----
-
-## 🚀 Getting Started
-
-### 1. Build the Project
-For the best performance (especially for video), use the \`release\` target which enables optimizations:
-\`\`\`bash
-make release
-\`\`\`
-This generates the \`ascii-view\` executable.
-
-### 2. Play Your First Video
-\`\`\`bash
-./ascii-view path/to/your_video.mp4
+\`\`\`text
+👤 Buyer/Seller <---> TG Mini App
+                             | (HTTPS API)
+                             v
+                       Express API
+                             |
+         +-------------------+-------------------+
+         |                   |                   |
+         v                   v                   v
+Firestore Database    TON Blockchain      TG Bot API
+(State & Wallets)    (W5 Smart Contracts)  (Status Notifications)
 \`\`\`
 
----
+1. **Listing & Checkout:** A seller lists an item with their destination wallet address. A buyer purchases the item via the Telegram Mini App, initiating the creation of a temporary W5 escrow wallet.
+2. **Payment Verification:** The buyer sends USDT (and optionally TON for gas, though W5 allows deducting gas from the USDT amount itself) to the temporary escrow wallet.
+3. **Escrow Hold:** The escrow wallet's mnemonic, contract address, and associated order details are stored in Firestore.
+4. **Auto-Release:** After a 1-minute delay, the backend scheduler triggers the escrow release: restores the W5 wallet contract from its mnemonic, calculates the split (**5%** platform fee to the server wallet, **95%** to the seller), and executes the USDT transfers directly from the escrow wallet, paying gas fees from the USDT balance.
 
-## 📖 Full Usage Guide
+## Tech Stack
 
-\`\`\`bash
-./ascii-view <input_file> [OPTIONS]
+### Frontend (\`client/\`)
+
+- **Framework:** React 19 + Vite
+- **Styling:** Tailwind CSS v4
+- **State Management:** Redux Toolkit
+- **Blockchain Interface:** \`@tonconnect/ui-react\`, \`@ton/ton\`, \`@ton/core\`, \`@orbs-network/ton-access\`
+
+### Backend (\`server/\`)
+
+- **Runtime:** Node.js (Express)
+- **Database & Hosting:** Firebase
+- **TON Blockchain SDK:** \`@ton/ton\`, \`@ton/crypto\`, \`@orbs-network/ton-access\`
+
+## Directory Structure
+
+\`\`\`text
+├── client/                 # React frontend
+│   ├── src/
+│   │   ├── pages/          # Pages (Checkout, Listings, etc.)
+│   │   └── store/          # Redux slices and store configuration
+│   └── vite.config.js
+├── server/                 # Express backend API
+│   ├── services/           # Firestore & Escrow logic services
+│   ├── utils/              # TON wallet utilities (W5 integration)
+│   └── index.js            # Express server entry point & scheduling
+├── database.rules.json     # Firebase Realtime Database rules
+├── firestore.rules         # Cloud Firestore security rules
+├── storage.rules           # Firebase Storage security rules
+└── firebase.json           # Firebase deployment config
 \`\`\`
 
-### Options Explained
+## Getting Started
 
-| Option | Name | Description | Default |
-| :--- | :--- | :--- | :--- |
-| \`-mw\` | Max Width | Maximum horizontal characters. | Terminal width |
-| \`-mh\` | Max Height | Maximum vertical characters. | Terminal height |
-| \`-cr\` | Char Ratio | Height-to-width ratio of terminal characters. | \`2.0\` |
-| \`-et\` | Edge Threshold | Sobel filter sensitivity (0.0 - 4.0). Lower is more sensitive. | \`4.0\` (Off) |
-| \`--retro-colors\` | Retro Mode | Limits output to 8 classic colors. | False |
+### Prerequisites
 
-### Advanced Usage Examples
+- Node.js (v18 or higher)
+- Firebase CLI (\`npm install -g firebase-tools\`)
+- A TON wallet (e.g., Tonkeeper) configured for Testnet
 
-**Optimize for Large Terminals:**
-If you reduce your terminal font size, you can achieve much higher "resolution":
-\`\`\`bash
-./ascii-view movie.mp4 -mw 200 -mh 100
+### 1. Environment Setup
+
+**Backend (\`server/.env\`):**
+
+\`\`\`text
+PORT=3001
+
+FIREBASE_API_KEY=your_firebase_api_key
+FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+FIREBASE_PROJECT_ID=your_firebase_project_id
+FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+FIREBASE_APP_ID=your_firebase_app_id
+FIREBASE_DATABASE_URL=https://your_project.firebaseio.com
+FIREBASE_REGION=us-central1
+
+SERVER_WALLET_ADDRESS=UQ...  # Destination for the 5% platform fee
+TON_NETWORK=testnet          # 'testnet' or 'mainnet'
 \`\`\`
 
-**Fine-tune Aspect Ratio:**
-If the video looks "stretched" vertically, increase the \`-cr\` value (e.g., \`2.2\`). If it looks squashed, decrease it (e.g., \`1.8\`).
-\`\`\`bash
-./ascii-view video.mp4 -cr 2.3
+**Frontend (\`client/.env\`):**
+
+\`\`\`text
+VITE_API_BASE_URL=http://localhost:3001
 \`\`\`
 
-**Highlight Outlines:**
-Use a low edge threshold to draw character outlines over the colors:
+### 2. Local Installation
+
 \`\`\`bash
-./ascii-view animation.mp4 -et 1.5
+# Setup backend
+cd server
+npm install
+npm run dev
+
+# Setup frontend (in a separate terminal window)
+cd client
+npm install
+npm run dev
 \`\`\`
 
----
+The frontend will run on \`http://localhost:5173\` and the backend on \`http://localhost:3001\`.
 
-## 💡 Tips for Best Results
+## Database Schemas
 
-1. **Smaller Fonts**: The smaller your terminal font, the more "pixels" you have. Try zooming out (Ctrl + Minus) before running.
-2. **Black Background**: Best results are achieved on a dark terminal background.
-3. **TrueColor Terminal**: Ensure your terminal supports 24-bit color (Windows Terminal, iTerm2, Alacritty, and most modern Linux terminals do).
-4. **Squint your eyes**: Seriously! If you squint slightly, the ASCII characters blend together to form a remarkably clear image.
+### \`orderWallets/{orderId}\`
 
----
+Stores details of the temporary escrow wallets generated per transaction: order ID, mnemonic, wallet address, wallet type (w5), buyer user ID, item ID, and creation timestamps.
 
-## ❓ Troubleshooting
+### \`users/{sellerId}\`
 
-- **No Audio (Windows)**: The player uses PowerShell's \`MediaPlayer\` by default. Ensure your system volume is up and PowerShell is allowed to run scripts.
-- **No Audio (Linux)**: Ensure \`ffplay\` is installed (part of the ffmpeg package).
-- **Video is Laggy**: Build with \`make release\` instead of just \`make\`. If it's still slow, reduce the width and height with \`-mw\` and \`-mh\`.
-- **Colors Look Wrong**: Ensure your terminal is set to \`xterm-256color\` or \`xterm-truecolor\`.
+Stores user metadata and destination payment addresses (the seller's TON wallet).
 
----
+## Escrow Release Mechanics
 
-## ⚙️ Technical Details
-1. **Piped Decoding**: Video is decoded by \`ffmpeg\` and scaled to the target resolution before being piped into the C program as raw RGB24 data.
-2. **HSV Conversion**: Colors are converted to the HSV space to accurately map them to the best-matching ANSI color while using the "Value" (brightness) to select the ASCII character.
-3. **Double Buffering**: (Internal) Uses ANSI escape codes to reposition the cursor instead of clearing the screen, preventing flicker.
+### W5 (Wallet Contract V5 Beta/R1) Features
 
+This project implements the \`WalletContractV5R1\` specification to optimize token transactions:
+
+- **USDT Gas Payment:** Traditional TON wallets require native TON coins to cover transaction fees (gas) when sending Jettons (like USDT).
+- **Escrow Application:** By using a W5 wallet for the escrow, the backend executes the split (95% to seller, 5% to platform) and pays the network fee directly out of the USDT balance, avoiding the need to fund the escrow address with native TON for gas.
+
+### Escrow Hold & Timeout
+
+1. When a checkout is completed, a timer job is registered in the backend.
+2. After 1 minute (configurable), the scheduler calls the release function.
+3. If the scheduler execution fails, the release can be triggered manually via \`POST /api/escrow/release\`.
+
+## Security Configuration
+
+- **Firestore Rules:** Restricts read/write access to order mnemonics, ensuring only the backend system can read sensitive escrow wallet credentials.
+- **Database Rules:** Sets up read/write structures for real-time components.
+
+Deploy security rules with:
+
+\`\`\`bash
+firebase deploy --only firestore:rules,database,storage
+\`\`\`
 `,
-    language: "C",
+    language: "JavaScript",
     stars: 0,
     forks: 0,
-    url: "https://github.com/realSalman/ascii-video-player"
-  },
-  {
-    name: "betterAIM",
-    slug: "betteraim",
-    description: "Aim improvement tool.",
-    details: `
-No README found
-`,
-    language: "TypeScript",
-    stars: 0,
-    forks: 0,
-    url: "https://github.com/realSalman/betterAIM"
-  },
-  {
-    name: "browser-based-local-video-player",
-    slug: "browser-based-local-video-player",
-    description: "Play local videos in the browser.",
-    details: `
-No README found
-`,
-    language: "TypeScript",
-    stars: 0,
-    forks: 0,
-    url: "https://github.com/realSalman/browser-based-local-video-player"
+    url: "https://github.com/realSalman/ton-escrow-marketplace"
   }
 ];

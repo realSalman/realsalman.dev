@@ -20,7 +20,7 @@ export default function LeftSidebar() {
 
         {/* Name */}
         <h1 className="text-3xl font-bold text-textHeading mb-6 font-mono">
-          realSalman
+          Salman
         </h1>
 
         {/* Details List */}

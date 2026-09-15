@@ -17,7 +17,10 @@ export default function LeftSidebar() {
     <aside className="w-full md:w-[35%] bg-surface border-b md:border-b-0 md:border-r border-border py-5 px-5 md:p-8 flex flex-col items-center justify-center shrink-0 md:overflow-hidden">
 
       {/* ── Mobile: compact horizontal / centered vertical card ── */}
-      <div className="flex md:hidden flex-col w-full max-w-md mx-auto relative">
+      <div 
+        className="flex md:hidden flex-col w-full max-w-md mx-auto relative cursor-pointer"
+        onClick={() => setExpanded(!expanded)}
+      >
         {/* Expand/Collapse button */}
         <button
           onClick={() => setExpanded(!expanded)}
@@ -57,8 +60,9 @@ export default function LeftSidebar() {
             {/* Expandable details */}
             <div
               className={`overflow-hidden transition-all duration-300 ease-in-out flex flex-col items-center w-full ${
-                expanded ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+                expanded ? "max-h-80 opacity-100 cursor-default" : "max-h-0 opacity-0"
               }`}
+              onClick={(e) => e.stopPropagation()}
             >
               <div className="flex flex-col gap-2 text-xs text-textBody w-fit text-left">
                 <span className="flex items-center gap-2">

@@ -20,7 +20,7 @@ export default function NowPage() {
           <ul className="space-y-4 text-sm md:text-base">
             <li className="flex items-center gap-3 text-gray-300">
               <span className="w-3.5 h-3.5 rounded-full border-2 border-gray-500 shrink-0"></span>
-              Add Projects page
+              Add Projects, Blogs
             </li>
             <li className="flex items-center gap-3 text-gray-300">
               <span className="w-3.5 h-3.5 rounded-full border-2 border-gray-500 shrink-0"></span>

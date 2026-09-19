@@ -14,7 +14,7 @@ export default function LeftSidebar() {
   }, [pathname]);
 
   return (
-    <aside className="w-full md:w-[35%] bg-surface border-b md:border-b-0 md:border-r border-border py-5 px-5 md:p-8 flex flex-col items-center justify-center shrink-0 md:overflow-hidden">
+    <aside className="w-full md:w-[35%] bg-surface border-b md:border-b-0 md:border-r border-border py-3 px-4 md:p-8 flex flex-col items-center justify-center shrink-0 md:overflow-hidden">
 
       {/* ── Mobile: compact horizontal / centered vertical card ── */}
       <div 
@@ -24,7 +24,7 @@ export default function LeftSidebar() {
         {/* Expand/Collapse button */}
         <button
           onClick={() => setExpanded(!expanded)}
-          className={`absolute p-2 text-gray-500 hover:text-textBodyHover transition-all z-10 ${expanded ? "top-0 right-0" : "top-3 right-0"}`}
+          className={`absolute p-2 text-gray-500 hover:text-textBodyHover transition-all z-10 ${expanded ? "top-0 right-0" : "top-1.5 right-0"}`}
           aria-label={expanded ? "Collapse details" : "Expand details"}
         >
           <svg
@@ -38,9 +38,9 @@ export default function LeftSidebar() {
         </button>
 
         {/* Content wrapper */}
-        <div className={`flex w-full transition-all duration-300 ${expanded ? 'flex-col items-center pt-6' : 'flex-row items-center gap-4'}`}>
+        <div className={`flex w-full transition-all duration-300 ${expanded ? 'flex-col items-center pt-6' : 'flex-row items-center gap-3'}`}>
           {/* Avatar */}
-          <div className={`rounded-full overflow-hidden border border-border shrink-0 transition-all duration-300 ${expanded ? 'w-24 h-24 mb-4' : 'w-16 h-16'}`}>
+          <div className={`rounded-full overflow-hidden border border-border shrink-0 transition-all duration-300 ${expanded ? 'w-24 h-24 mb-4' : 'w-12 h-12'}`}>
             <Image
               src="/avatar.jpg"
               alt="realSalman profile"
@@ -53,7 +53,7 @@ export default function LeftSidebar() {
 
           {/* Name & Details */}
           <div className={`flex flex-col transition-all duration-300 ${expanded ? 'items-center w-full' : 'flex-1 min-w-0'}`}>
-            <h1 className={`font-bold text-textHeading font-mono leading-tight transition-all duration-300 ${expanded ? 'text-2xl mb-4' : 'text-xl'}`}>
+            <h1 className={`font-bold text-textHeading font-mono leading-tight transition-all duration-300 ${expanded ? 'text-2xl mb-4' : 'text-lg'}`}>
               Salman
             </h1>
 

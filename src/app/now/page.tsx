@@ -8,7 +8,7 @@ export default function NowPage() {
 
         <div className="bg-surface border border-border rounded-lg p-6 md:p-8">
           <p className="text-gray-400 text-sm md:text-base leading-relaxed">
-            Currently exploring <span className="font-semibold text-gray-300">Python</span>, <span className="font-semibold text-gray-300">Go</span> and <span className="font-semibold text-gray-300">Rust</span> plus <span className="font-semibold text-gray-300">Machine Learning</span>.
+            Currently exploring <span className="font-semibold text-gray-300">Data Science</span>.
           </p>
         </div>
 

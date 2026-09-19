@@ -200,9 +200,7 @@ export const projects: Project[] = [
     name: "SynapseAI",
     slug: "synapse-ai-task-manager",
     description: [
-      "Agentic Task Manager",
-      "Function-Calling AI",
-      "Optimistic UI Updates"
+      "Agentic Task/Note Manager"
     ],
     details: "I built a full-stack task manager where the AI isn't just a chatbot—it has actual agency. I integrated OpenRouter and gave the AI function-calling capabilities. When a user asks 'Create a board for my marketing campaign with To Do, In Progress, and Done columns', the AI actually executes `create_board` and `add_column` tools against the backend, mutating the database in real-time.\n\nThe backend uses Express and MongoDB, with Firebase Admin for auth. To make the AI feel safe to use, I built a custom logging and undo system. Every time the AI takes an action, it logs the `previousState` in a TTL-indexed `AIAction` collection. If the AI makes a mistake, the user can click 'Undo' and the exact state is restored perfectly.\n\nOn the frontend, I used Zustand for global UI state (like managing the AI drawer) and TanStack Query for server state. This allowed me to implement optimistic updates—when you drag and drop a task using `@hello-pangea/dnd` or ask the AI to create a board, the UI updates instantly while the mutation resolves in the background. The AI chat slides out in a resizable drawer, allowing users to converse while watching their board visually change in response.",
     problem: "Most AI task management tools just offer a conversational interface that gives advice, but leaves the actual data entry to the user. I wanted to build an agentic system where the AI acts as a project manager, capable of directly manipulating the user's boards and tasks based on natural language commands, without compromising the safety of the user's data.",
@@ -272,9 +270,7 @@ export const projects: Project[] = [
     name: "Airdrop Mining App",
     slug: "phmn-miner-tma",
     description: [
-      "High-Concurrency TMA",
-      "Real-time Sockets",
-      "TON Integration"
+      "High-Concurrency TMA"
     ],
     details: "I built this Telegram Mini App (TMA) to handle massive concurrency spikes during airdrop events. Instead of relying on standard REST polling for the tap-to-mine mechanic—which would easily overwhelm the server—I implemented a persistent WebSocket connection via Socket.io. This allows the React frontend to instantly sync mining state, daily streaks, and points with the Node.js backend.\n\nOn the client side, I used React 18 with Framer Motion to ensure the UI felt like a native app running at 60fps inside the Telegram webview. I also integrated `@tonconnect/ui-react` so users can seamlessly link their TON wallets directly within the app for future token distributions. Finally, I integrated Adsgram for monetization, ensuring ad watch validations were securely verified on the backend before dispensing rewards.",
     problem: "Tap-to-earn games in Telegram face two major challenges: they need to feel exactly like native apps (no lag, smooth animations), and they need to survive massive traffic spikes when an airdrop is announced. Traditional HTTP polling for every 'tap' crushes database performance.",
@@ -341,9 +337,7 @@ export const projects: Project[] = [
     name: "TON Escrow Marketplace",
     slug: "ton-escrow-marketplace",
     description: [
-      "W5 Smart Contracts",
-      "Gasless USDT Transfers",
-      "Firebase Automation"
+      "based on TON blockchain"
     ],
     details: "I built this decentralized marketplace as a Telegram Mini App to solve a specific UX problem on the TON blockchain: users shouldn't need native TON coins just to pay gas for USDT transactions. I implemented Wallet V5 (W5) smart contracts, which natively support deducting gas fees directly from the USDT balance.\n\nHere's how it works: when a buyer checks out, the Express backend generates a temporary W5 escrow wallet and securely stores its encrypted mnemonic in Firestore (guarded by strict Firebase Security Rules). The buyer sends USDT to this address. A Cloud Scheduler task runs in the background, waits for the escrow period, and then automatically reconstructs the W5 wallet to execute a split payment—95% to the seller, 5% to the platform—paying the network fee out of the USDT itself.",
     problem: "Traditional crypto escrow requires either the buyer or the platform to hold native network tokens (TON) to pay for transaction fees when moving stablecoins (USDT). This creates massive friction for onboarding non-crypto-native Telegram users who just want to pay with USDT.",

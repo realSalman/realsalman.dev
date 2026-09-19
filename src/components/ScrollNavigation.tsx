@@ -40,6 +40,8 @@ export default function ScrollNavigation({ children }: { children: React.ReactNo
 
     const handleWheel = (e: WheelEvent) => {
       const isDesktop = window.innerWidth >= 768;
+      if (!isDesktop) return;
+
       let scrollTop, scrollHeight, clientHeight;
 
       if (isDesktop && containerRef.current) {
@@ -69,11 +71,13 @@ export default function ScrollNavigation({ children }: { children: React.ReactNo
 
     const handleTouchMove = (e: TouchEvent) => {
       if (touchStartY.current === null) return;
+      
+      const isDesktop = window.innerWidth >= 768;
+      if (!isDesktop) return;
 
       const touchEndY = e.touches[0].clientY;
       const deltaY = touchStartY.current - touchEndY; // Positive = scrolling down
 
-      const isDesktop = window.innerWidth >= 768;
       let scrollTop, scrollHeight, clientHeight;
 
       if (isDesktop && containerRef.current) {

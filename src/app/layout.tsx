@@ -3,6 +3,7 @@ import { Geist, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import LeftSidebar from "@/components/LeftSidebar";
 import NavBar from "@/components/NavBar";
+import ScrollNavigation from "@/components/ScrollNavigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,11 +30,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <LeftSidebar />
         <main className="flex-1 flex flex-col md:h-full md:overflow-hidden relative">
           <NavBar />
-          <div className="flex-1 md:overflow-y-auto px-6 pt-8 md:pt-32 md:px-12 lg:px-24 pb-24 w-full">
-            <div className="max-w-5xl mx-auto w-full">
-              {children}
-            </div>
-          </div>
+          <ScrollNavigation>
+            {children}
+          </ScrollNavigation>
         </main>
       </body>
     </html>

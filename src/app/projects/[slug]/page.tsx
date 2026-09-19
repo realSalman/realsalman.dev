@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { projects } from "@/data/projects";
+import DecisionCard from "./DecisionCard";
 
 type ProjectPageProps = {
   params: Promise<{
@@ -42,9 +43,17 @@ export default async function ProjectDetailsPage({ params }: ProjectPageProps) {
         )}
 
         <div>
-          <h1 className="text-3xl md:text-5xl font-mono text-textHeading font-black mb-6 tracking-tight">
+          <h1 className="text-3xl md:text-5xl font-mono text-textHeading font-black mb-4 tracking-tight">
             {project.name}
           </h1>
+
+          {/* Tagline */}
+          {project.tagline && (
+            <p className="text-lg md:text-xl font-mono text-sky mb-6 leading-relaxed">
+              {project.tagline}
+            </p>
+          )}
+
           <div className="prose prose-invert max-w-none">
             <p className="text-lg font-mono text-textBody leading-relaxed whitespace-pre-wrap">
               {project.details}
@@ -52,6 +61,37 @@ export default async function ProjectDetailsPage({ params }: ProjectPageProps) {
           </div>
         </div>
       </section>
+
+      {/* Metrics Bar */}
+      {project.metrics && project.metrics.length > 0 && (
+        <section>
+          <div className="flex flex-wrap gap-3 md:gap-4">
+            {project.metrics.map((metric, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-3 px-5 py-3 bg-surface rounded-xl border border-white/5"
+              >
+                <span className="text-2xl font-black text-textHeading font-mono">{metric.value}</span>
+                <span className="text-xs text-textBody uppercase tracking-widest font-semibold">{metric.label}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* The Challenge */}
+      {project.problem && (
+        <section className="space-y-6">
+          <h2 className="text-xl font-bold uppercase tracking-widest text-textHeading font-mono">
+            The Challenge
+          </h2>
+          <div className="p-6 md:p-8 bg-surface/50 rounded-2xl border border-white/5">
+            <p className="text-base font-mono text-textBody leading-relaxed">
+              {project.problem}
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* Tech Stack */}
       {project.tech && project.tech.length > 0 && (
@@ -111,6 +151,45 @@ export default async function ProjectDetailsPage({ params }: ProjectPageProps) {
                     )}
                   </div>
                 )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Engineering Decisions */}
+      {project.decisions && project.decisions.length > 0 && (
+        <section className="space-y-6">
+          <h2 className="text-xl font-bold uppercase tracking-widest text-textHeading font-mono">
+            Engineering Decisions
+          </h2>
+          <div className="space-y-3">
+            {project.decisions.map((decision, i) => (
+              <DecisionCard key={i} question={decision.question} answer={decision.answer} index={i} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Results */}
+      {project.results && project.results.length > 0 && (
+        <section className="space-y-6">
+          <h2 className="text-xl font-bold uppercase tracking-widest text-textHeading font-mono">
+            Results
+          </h2>
+          <div className="space-y-3">
+            {project.results.map((result, i) => (
+              <div
+                key={i}
+                className="flex items-start gap-4 p-4 md:p-5 bg-surface/50 rounded-xl border border-white/5 animate-in slide-in-from-left-4 duration-500"
+                style={{ animationDelay: `${i * 80}ms`, animationFillMode: 'both' }}
+              >
+                <div className="shrink-0 w-7 h-7 rounded-lg bg-matcha/15 flex items-center justify-center mt-0.5">
+                  <svg className="w-4 h-4 text-matcha" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <p className="text-sm md:text-base font-mono text-textBody leading-relaxed">{result}</p>
               </div>
             ))}
           </div>

@@ -9,7 +9,7 @@ export default function ProjectsPage() {
           Projects
         </h1>
         <p className="text-md md:text-md font-mono text-textBody">
-          Here are a few projects, will be adding more soon.
+          Here are a few projects I've built
         </p>
       </section>
 
@@ -29,9 +29,12 @@ export default function ProjectsPage() {
                   </svg>
                 </div>
               </div>
-              <p className="text-gray-400 text-sm mb-5 line-clamp-2 h-10">
+              <p className="text-gray-400 text-sm mb-2 line-clamp-2 h-10">
                 {Array.isArray(repo.description) ? repo.description.join(', ') : repo.description}
               </p>
+              {repo.tagline && (
+                <p className="text-gray-500 text-xs font-mono line-clamp-1 mb-3">{repo.tagline}</p>
+              )}
             </Link>
           ))}
         </div>

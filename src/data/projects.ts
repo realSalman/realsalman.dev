@@ -104,7 +104,7 @@ export const projects: Project[] = [
     url: "https://github.com/realSalman/GreenMesh"
   },
   {
-    name: "OBE Platform",
+    name: "OBE Analytics Engnine",
     slug: "obe-platform",
     description: [
       "AI-Powered Academic Engine"
@@ -334,7 +334,7 @@ export const projects: Project[] = [
     url: "https://github.com/realSalman/PHMN-MINER-tma"
   },
   {
-    name: "TON Escrow Marketplace",
+    name: "Escrow Marketplace",
     slug: "ton-escrow-marketplace",
     description: [
       "based on TON blockchain"

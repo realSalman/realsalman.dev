@@ -266,6 +266,7 @@ export const projects: Project[] = [
     forks: 0,
     url: "https://github.com/realSalman/Synapse-AI-Task-Manager"
   },
+  /*
   {
     name: "Airdrop Mining App",
     slug: "phmn-miner-tma",
@@ -333,6 +334,7 @@ export const projects: Project[] = [
     forks: 0,
     url: "https://github.com/realSalman/PHMN-MINER-tma"
   },
+  */
   {
     name: "Escrow Marketplace",
     slug: "ton-escrow-marketplace",

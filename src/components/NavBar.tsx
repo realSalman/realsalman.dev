@@ -116,13 +116,15 @@ export default function NavBar() {
 
       {/* Panel */}
       <div
-        className={`fixed inset-x-0 top-0 z-[70] md:hidden transition-all duration-300 ease-out ${
-          menuOpen
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-full opacity-0"
-        }`}
+        className="fixed inset-0 z-[70] md:hidden flex items-center justify-center pointer-events-none px-4"
       >
-        <div className="bg-surface border border-border rounded-2xl mx-3 mt-3 p-6 shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+        <div 
+          className={`bg-surface border border-border rounded-2xl w-full max-w-sm p-6 shadow-[0_8px_40px_rgba(0,0,0,0.5)] transition-all duration-300 ease-out pointer-events-auto ${
+            menuOpen
+              ? "scale-100 opacity-100"
+              : "scale-95 opacity-0"
+          }`}
+        >
           {/* Avatar + Name */}
           <div className="flex flex-col items-center mb-6">
             <div className="w-20 h-20 rounded-full overflow-hidden border border-border mb-3">

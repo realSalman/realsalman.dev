@@ -43,7 +43,7 @@ export default function Home() {
               <h3 className="text-textHeading font-semibold text-base md:text-lg">Infrastructure</h3>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              I'm a big fan of <span className="font-bold text-gray-200">Docker</span>, <span className="font-bold text-gray-200">Ansible</span> for automation, and <span className="font-bold text-gray-200">Traefik</span> for routing. <span className="font-bold text-gray-200">CI/CD</span> pipelines that just work and infrastructure you can rely on—that's the goal.
+              I use <span className="font-bold text-gray-200">Docker</span> to containerize applications and rely on <span className="font-bold text-gray-200">Nginx</span> as a high-performance reverse proxy for scalable systems.
             </p>
           </div>
 
@@ -117,7 +117,7 @@ export default function Home() {
               Infrastructure
             </div>
             <div className="text-gray-400 text-sm leading-relaxed">
-              Docker · Ansible · Nginx · Prometheus · Grafana
+              Docker · Nginx · Prometheus · Grafana
             </div>
           </div>
 
